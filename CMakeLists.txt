@@ -12,6 +12,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+find_package(OpenCV REQUIRED)
+
+include_directories(
+    ${GStreamer_DIR}/include/gstreamer-1.0
+    ${GStreamer_DIR}/include/glib-2.0
+    ${GStreamer_DIR}/lib/glib-2.0/include
+)
+
+link_directories(
+    ${GStreamer_DIR}/lib
+)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_LIBRARY_DIRS})
+
 set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
@@ -42,7 +57,16 @@ else()
     endif()
 endif()
 
-target_link_libraries(ai-stream-analyzer PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ai-stream-analyzer
+  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+
+  ${OpenCV_LIBS}
+
+  gstapp-1.0.lib
+  gstreamer-1.0.lib
+  gobject-2.0.lib
+  glib-2.0.lib
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
