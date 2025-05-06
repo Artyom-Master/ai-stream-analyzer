@@ -38,6 +38,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ai-stream-analyzer
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        src/controller.h src/controller.cpp
+        src/gstworker.h src/gstworker.cpp
+        src/frameanalyzer.h src/frameanalyzer.cpp
+        src/videowidget.h src/videowidget.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET ai-stream-analyzer APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
